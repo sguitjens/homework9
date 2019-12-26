@@ -10,7 +10,7 @@ const generate = require("./generateHTML");
 const linkedInBaseURL = "https://www.linkedin.com/in/";
 const gitHubBaseURL = "https://api.github.com";
 const pathToHTML = "./index.html";
-const pathToSavePDF = "./assets";
+const pathToPDF = "./assets/profile.pdf";
 
 // function to ask questions
 const askQuestions = () => {
@@ -75,7 +75,7 @@ const askQuestions = () => {
     return writeToHTML(pathToHTML, answers);
   })
   .then(() => {
-    writeToPDF("profile.pdf", pathToHTML)
+    writeToPDF(pathToPDF, pathToHTML)
   })
 }
 
