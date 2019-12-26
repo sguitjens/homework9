@@ -10,7 +10,7 @@ const generate = require("./generateHTML");
 const linkedInBaseURL = "https://www.linkedin.com/in/";
 const gitHubBaseURL = "https://api.github.com";
 const pathToHTML = "./index.html";
-const pathToPDF = "./assets/profile.pdf";
+const pathToPDF = "./profile.pdf";
 
 // function to ask questions
 const askQuestions = () => {
@@ -91,12 +91,12 @@ const writeToPDF = (pathToHTML) => {
   const conversion = convertHTMLToPDF({
     converterPath: convertHTMLToPDF.converters.PDF
   });
-  console.log("PDF PAGES", conversion.pages);
-  console.log("PDF STREAM", conversion.stream);
   conversion({file: pathToHTML}, (err, result) => {
     if (err) return console.error("ERROR MESSAGE", err);
+    console.log("PDF PAGES", result.numberOfPages);
+    console.log("PDF STREAM", result.stream);
     result.stream.pipe(fs.createWriteStream("profile.pdf"));
-  });
+  })
 }
 
 /*
