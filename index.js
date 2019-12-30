@@ -1,13 +1,10 @@
 const inquirer = require("inquirer");
-const colornames = require("colornames");
 const axios = require("axios");
 const convertHTMLToPDF = require("electron-html-to"); // HTML conversion tool: convert to PDF
 const fs = require("fs");
 const util = require("util");
 const generate = require("./generateHTML");
-// var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-const linkedInBaseURL = "https://www.linkedin.com/in/";
 const gitHubBaseURL = "https://api.github.com";
 const pathToHTML = "./index.html";
 const pathToPDF = "./profile.pdf";
@@ -18,11 +15,11 @@ const askQuestions = () => {
     {
       type: "input",
       name: "name",
-      messaage: "Please enter your full name:",
+      message: "Please enter your full name:",
       required: true,
-      default: "Little  Dragon"
+      default: "a Little  Dragon"
     },
-    { // make this a radio button with green, blue, pink, and red
+    {
       type: "list",
       name: "color",
       message: "Please enter your favorite color:",
@@ -33,51 +30,55 @@ const askQuestions = () => {
     {
       type: "input",
       name: "city",
-      messaage: "Please enter your city of residence:",
+      message: "Please enter your city of residence:",
       required: true,
       default: "Portland"
     },
     {
       type: "input",
       name: "state",
-      messaage: "Please enter your state of residence:",
+      message: "Please enter your state of residence:",
       required: true,
       default: "OR"
     },
     {
       type: "input",
       name: "githubUserName",
-      messaage: "Please enter your name:",
+      message: "Please enter your name:",
       required: false,
       default: "sguitjens"
     },
     {
       type: "input",
       name: "linkedInUserName",
-      messaage: "Please enter your name:",
+      message: "Please enter your name:",
       required: false,
-      default: "No LinkedIn"
+      default: "sydneyguitjens"
     },
     {
       type: "input",
       name: "bio",
       message: "Please enter some bio text:",
       required: true,
-      default: "I am a little dragon!"
+      default: "I like to bite my own tail!"
     }
   ])
-  .then(answers => {
+  // use the answers to add the github information to the data
+  .then((answers, err) => {
     console.log("Your answers:", answers);
-    getGitHubInformation(answers.githubUserName);
-    return answers;
+    return addGitHubInformation(answers.gitHubUserName, answers);
   })
-  .then(answers => {
-    return writeToHTML(pathToHTML, answers);
+  .then(allResponses => {
+    return writeToHTML(pathToHTML, allResponses);
   })
   .then(() => {
-    writeToPDF(pathToPDF, pathToHTML)
+    writeToPDF(pathToHTML, pathToPDF)
   })
 }
+
+askQuestions.catch = (err) => {
+  console.log("ERROR RETURNED:", err);
+};
 
 const writeToHTML = (filename, data) => {
   let htmlfile = generate(data);
@@ -85,9 +86,7 @@ const writeToHTML = (filename, data) => {
   });
 }
 
-const writeToPDF = (pathToHTML) => {
-  // look at week in class exercises #40 - Rani sent out the solution
-  // look up electron-html-to
+const writeToPDF1 = (pathToHTML, pathToPDF) => {
   const conversion = convertHTMLToPDF({
     converterPath: convertHTMLToPDF.converters.PDF
   });
@@ -95,95 +94,73 @@ const writeToPDF = (pathToHTML) => {
     if (err) return console.error("ERROR MESSAGE", err);
     console.log("PDF PAGES", result.numberOfPages);
     console.log("PDF STREAM", result.stream);
-    result.stream.pipe(fs.createWriteStream("profile.pdf"));
+    result.stream.pipe(fs.createWriteStream(pathToPDF));
   })
 }
 
-/*
-conversion will return number of pages and stream
-
-
-fs.readFile('index.html', 'utf8', (err, htmlString) => {
-  // add local path in case your HTML has relative paths
-  htmlString = htmlString.replace(/href="|src="/g, match => {
-    return match + 'file://path/to/you/base/public/directory';
+const writeToPDF = (pathToHTML, pathToPDF) => {
+  var conversion = convertHTMLToPDF({
+    converterPath: convertHTMLToPDF.converters.PDF
   });
-  const conversion = convertFactory({
-    converterPath: convertFactory.converters.PDF,
-    allowLocalFilesAccess: true
+  
+  conversion({ file: pathToHTML }, function(err, result) {
+    if (err) {
+      return console.error("PDF ERROR:", err);
+    }
+    console.log(result.numberOfPages);
+    console.log(result.logs);
+    result.stream.pipe(fs.createWriteStream(pathToPDF));
   });
-  conversion({ html: htmlString }, (err, result) => {
-    if (err) return console.error(err);
-    result.stream.pipe(fs.createWriteStream('/path/to/anywhere.pdf'));
-    conversion.kill(); // necessary if you use the electron-server strategy, see bellow for details
-  });
-});
-*/
-
-
-const gitHubUserName = "sguitjens";
+}
 
 function init() {
-  // ask questions and create the HTML
-  askQuestions()
-
-  // let obj = {color: "red"};
-  // let htmlfile = generate(obj);
-  // fs.writeFile("index.html", htmlfile, function(data) {
-  //   console.log("make a pdf here");
-  // });
+  askQuestions();
 }
 
-const getGitHubInformation = gitHubUserName => {
-  //https://api.github.com/search/users?q=sguitjens
-  // repos URL: https://api.github.com/users/sguitjens/repos
-  // followers, stars, following
-  axios
-  .get(`${gitHubBaseURL}/users/${gitHubUserName}/followers`)
-  .then(function(res) {
-  // console.log(res.data);
-  console.log("NUMBER OF FOLLOWERS", res.data.length);
-  });
+// this returns all of the answers and github information as an object
+const addGitHubInformation = (gitHubUserName, answers) => {
+  // return new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve(`Completed in 1000`)
+  //   }, 1000)
+  // })
+  return Promise.all([
+    axios
+      .get(`${gitHubBaseURL}/users/${gitHubUserName}/followers`)
+      .then(function(res) {
+        return res.data.length;
+      }),
 
-  axios
-  .get(`${gitHubBaseURL}/users/${gitHubUserName}/following`)
-  .then(function(res) {
-  // console.log(res.data);
-  console.log("NUMBER FOLLOWING", res.data.length);
-  });
+    axios
+      .get(`${gitHubBaseURL}/users/${gitHubUserName}/following`)
+      .then(function(res) {
+        return res.data.length;
+      }),
 
-  axios
-  .get(`${gitHubBaseURL}/users/${gitHubUserName}/starred`)
-  .then(function(res) {
-    // console.log(res.data);
-    console.log("NUMBER OF STARS", res.data.length);
-  });
+    axios
+      .get(`${gitHubBaseURL}/users/${gitHubUserName}/starred`)
+      .then(function(res) {
+        return res.data.length;
+      }),
 
-  axios
-  .get(`${gitHubBaseURL}/users/${gitHubUserName}/repos`)
-  .then(function(res) {
-    // console.log(res.data);
-    console.log("NUMBER OF REPOS", res.data.length);
+    axios
+      .get(`${gitHubBaseURL}/users/${gitHubUserName}/repos`)
+      .then(function(res) {
+        return res.data.length;
+      })
+  ])
+  .then(promises => {
+    console.log(promises); // this is what is expected
+    let promisesObj = { // this returns "undefined"
+      followerCount: promises[0],
+      followingCount: promises[1],
+      starCount: promises[2],
+      repoCount: promises[3]
+    }
+    Object.assign(answers, promisesObj);
+    console.log("FULL LIST?", answers);
+    return answers;
   });
-}
+} 
 
 init();
-
-/*
-GitHub Link URLs:
-Repos: `https://github.com/${username}?tab=repositories`
-Followers: `https://github.com/${username}?tab=followers`
-GitHub Stars: `https://github.com/${username}?tab=stars`
-Following: `https://github.com/${username}?tab=following`
-*/
-
-/*
-Your answers: { 
-  name: 'Little  Dragon',
-  color: 'red',
-  city: 'Portland',
-  state: 'OR',
-  githubUserName: 'No GitHub Pages',
-  linkedInUserName: 'No LinkedIn',
-  bio: 'I am a little dragon!' }
-*/

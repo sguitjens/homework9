@@ -34,7 +34,7 @@ function generateHTML(data) {
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
-      <title>Document</title>
+      <title>${data.name} Developer Profile</title>
       <style>
           @page {
             margin: 0;
@@ -173,32 +173,50 @@ function generateHTML(data) {
       </style>
       </head>
       <body>
-      
-      <div class="container photo">
-      
-        <div class="photo-header">
-          <img src="./assets/little_dragon.jpg" alt="picture" width="30%" height="30%">
-          <h1>${data.name}</h1>
-          <h2>${data.name}</h1>
+
+      <div class="wrapper">
+      <div class="photo-header">
+        <div class="col">
+          <div><img src="./assets/little_dragon.jpg" alt="picture" width="30%" height="30%"></div>
+          <h1>Hello!</h1>
+          <h2>I am ${data.name}</h1>
+          <h4>currently in full stack development bootcamp</h4>
+          <div class="links-nav">${data.city},&nbsp;${data.state}&nbsp;&nbsp; <a href="https://github.com/${data.githubUserName}" alt="github home" target="_blank"><i class="fab fa-github-alt"></i>&nbsp;GitHub</a> &nbsp;&nbsp;<a href="https://www.linkedin.com/in/${data.linkedInUserName}/" alt="linkedin home" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a></div>
         </div>
-      
-       container
       </div>
-      <div class="col-2dot4">
-        div col-2dot4
+
+      <div class="container">
+      <div class="main links-nav">
+        <div>
+          <div class="col">
+            <div>
+              <h3>${data.bio}</h3>
+            </div>
+          </div>
+          <div class="links-nav">
+            <div class="row">
+              <div class="col col-2dot4 col-sm-2dot4 col-md-2dot4 card">
+                <a href="https://github.com/${data.githubUserName}?tab=repositories" target="_blank"><h4>Public Repositories</h4><h5>${data.repoCount}</h5></a>
+              </div>
+              <div class="col col-2dot4 col-sm-2dot4 col-md-2dot4 card">
+                <a href="https://github.com/${data.githubUserName}?tab=followers" target="_blank"><h4>Followers</h4><h5>${data.followerCount}</h5></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-2dot4 col-sm-2dot4 col-md-2dot4 card">
+                <a href="https://github.com/${data.githubUserName}?tab=stars" target="_blank"><h4>GitHub Stars</h4><h5>${data.starCount}</h5></a>
+              </div>
+              <div class="col col-2dot4 col-sm-2dot4 col-md-2dot4 card">
+                <a href="https://github.com/${data.githubUserName}?tab=following" target="_blank"><h4>Following</h4><h5>${data.followingCount}</h5></a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-2dot4">
-        div col-sm-2dot4
-      </div>
-      <div class="col-md-2dot4">
-        div col-md-2dot4
-      </div>
-      <div class="col-lg-2dot4">
-        div col-lg-2dot4
-      </div>
-      <div class="col-xl-2dot4">
-        div col-xl-2dot4
-      </div>
+    </div>
+
+        <footer>
+        </footer>
 
       </body>
       </html>`
