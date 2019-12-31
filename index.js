@@ -68,12 +68,8 @@ const askQuestions = () => {
     console.log("Your answers:", answers);
     return addGitHubInformation(answers.gitHubUserName, answers);
   })
-  .then(allResponses => {
-    return writeToHTML(pathToHTML, allResponses);
-  })
-  .then(() => {
-    writeToPDF(pathToHTML, pathToPDF)
-  })
+  .then(allResponses => writeToHTML(pathToHTML, allResponses))
+  .then(() => writeToPDF(pathToHTML, pathToPDF));
 }
 
 askQuestions.catch = (err) => {
@@ -86,32 +82,40 @@ const writeToHTML = (filename, data) => {
   });
 }
 
-const writeToPDF1 = (pathToHTML, pathToPDF) => {
+const writeToPDF = (pathToHTML, pathToPDF) => {
   const conversion = convertHTMLToPDF({
     converterPath: convertHTMLToPDF.converters.PDF
   });
-  conversion({file: pathToHTML}, (err, result) => {
-    if (err) return console.error("ERROR MESSAGE", err);
-    console.log("PDF PAGES", result.numberOfPages);
-    console.log("PDF STREAM", result.stream);
-    result.stream.pipe(fs.createWriteStream(pathToPDF));
-  })
+  fs.readFile(pathToHTML, "utf8", (err, htmlString) => {
+    conversion({html: htmlString}, (err, result) => {
+      if (err) return console.error("ERROR MESSAGE", err);
+      console.log("PDF PAGES", result.numberOfPages);
+      console.log("PDF STREAM", result.stream);
+      result.stream.pipe(fs.createWriteStream(pathToPDF));
+      conversion.kill();
+    })
+  }) 
 }
 
-const writeToPDF = (pathToHTML, pathToPDF) => {
-  var conversion = convertHTMLToPDF({
-    converterPath: convertHTMLToPDF.converters.PDF
-  });
-  
-  conversion({ file: pathToHTML }, function(err, result) {
-    if (err) {
-      return console.error("PDF ERROR:", err);
-    }
-    console.log(result.numberOfPages);
-    console.log(result.logs);
-    result.stream.pipe(fs.createWriteStream(pathToPDF));
-  });
-}
+// const writeToPDF2 = (pathToHTML, pathToPDF) => {
+//   // let conversion = convertHTMLToPDF({ converterPath: convertHTMLToPDF.converters.PDF });
+//   let htmlString = fs.readFile(pathToHTML, "utf8", (err, data) => {
+//     if(err) {
+//       console.log("ERROR", err);
+//       throw err;
+//     }
+//     console.log("DATA", data);
+//     conversion({ html: htmlString }, function(err, result) {
+//       if (err) {
+//         return console.error("PDF ERROR:", err);
+//       }
+//       console.log("RESULT: NUMBER OF PAGES:",result.numberOfPages);
+//       console.log("RESULT: LOGS:", result.logs);
+//       result.stream.pipe(fs.createWriteStream(pathToPDF));
+//       conversion.kill();
+//     })
+//   })
+// }
 
 function init() {
   askQuestions();
