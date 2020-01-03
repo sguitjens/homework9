@@ -3,7 +3,7 @@ const colors = {
     wrapperBackground: "#E6E1C3",
     headerBackground: "#C1C72C",
     headerColor: "black",
-    photoBorderColor: "#black"
+    photoBorderColor: "black"
   },
   blue: {
     wrapperBackground: "#5F64D3",
@@ -54,6 +54,7 @@ function generateHTML(data) {
          .wrapper {
          background-color: ${colors[data.color].wrapperBackground};
          padding-top: 100px;
+         height: 70%
          }
          body {
          background-color: white;
@@ -177,10 +178,10 @@ function generateHTML(data) {
       <div class="wrapper">
       <div class="photo-header">
         <div class="col">
-          <div><img src="./assets/little_dragon.jpg" alt="picture" width="30%" height="30%"></div>
+          <div><img src="${data.avatarURL}" alt="picture" width="30%" height="30%"></div>
           <h1>Hello!</h1>
           <h2>I am ${data.name}</h1>
-          <h4>currently in full stack development bootcamp</h4>
+          <h4>currently in full stack web development bootcamp</h4>
           <div class="links-nav">${data.city},&nbsp;${data.state}&nbsp;&nbsp; <a href="https://github.com/${data.githubUserName}" alt="github home" target="_blank"><i class="fab fa-github-alt"></i>&nbsp;GitHub</a> &nbsp;&nbsp;<a href="https://www.linkedin.com/in/${data.linkedInUserName}/" alt="linkedin home" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a></div>
         </div>
       </div>
@@ -215,7 +216,7 @@ function generateHTML(data) {
       </div>
     </div>
 
-        <footer>
+        <footer class="wrapper">
         </footer>
 
       </body>

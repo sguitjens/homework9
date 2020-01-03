@@ -17,7 +17,7 @@ const askQuestions = () => {
       name: "name",
       message: "Please enter your full name:",
       required: true,
-      default: "a Little  Dragon"
+      default: "the Eyeball of Doom"
     },
     {
       type: "list",
@@ -25,7 +25,7 @@ const askQuestions = () => {
       message: "Please enter your favorite color:",
       choices: ["green", "blue", "pink", "red"],
       required: true,
-      default: "red"
+      default: "green"
     },
     {
       type: "input",
@@ -44,14 +44,14 @@ const askQuestions = () => {
     {
       type: "input",
       name: "githubUserName",
-      message: "Please enter your name:",
+      message: "Please enter your GitHub user name:",
       required: false,
       default: "sguitjens"
     },
     {
       type: "input",
       name: "linkedInUserName",
-      message: "Please enter your name:",
+      message: "Please enter your LinkedIn user name:",
       required: false,
       default: "sydneyguitjens"
     },
@@ -60,12 +60,11 @@ const askQuestions = () => {
       name: "bio",
       message: "Please enter some bio text:",
       required: true,
-      default: "I like to bite my own tail!"
+      default: "I see all of the things!"
     }
   ])
   // use the answers to add the github information to the data
   .then((answers, err) => {
-    console.log("Your answers:", answers);
     return addGitHubInformation(answers.gitHubUserName, answers);
   })
   .then(allResponses => writeToHTML(pathToHTML, allResponses))
@@ -84,38 +83,17 @@ const writeToHTML = (filename, data) => {
 
 const writeToPDF = (pathToHTML, pathToPDF) => {
   const conversion = convertHTMLToPDF({
-    converterPath: convertHTMLToPDF.converters.PDF
+    converterPath: convertHTMLToPDF.converters.PDF,
+    allowLocalFilesAccess: true 
   });
   fs.readFile(pathToHTML, "utf8", (err, htmlString) => {
     conversion({html: htmlString}, (err, result) => {
       if (err) return console.error("ERROR MESSAGE", err);
-      console.log("PDF PAGES", result.numberOfPages);
-      console.log("PDF STREAM", result.stream);
       result.stream.pipe(fs.createWriteStream(pathToPDF));
       conversion.kill();
     })
   }) 
 }
-
-// const writeToPDF2 = (pathToHTML, pathToPDF) => {
-//   // let conversion = convertHTMLToPDF({ converterPath: convertHTMLToPDF.converters.PDF });
-//   let htmlString = fs.readFile(pathToHTML, "utf8", (err, data) => {
-//     if(err) {
-//       console.log("ERROR", err);
-//       throw err;
-//     }
-//     console.log("DATA", data);
-//     conversion({ html: htmlString }, function(err, result) {
-//       if (err) {
-//         return console.error("PDF ERROR:", err);
-//       }
-//       console.log("RESULT: NUMBER OF PAGES:",result.numberOfPages);
-//       console.log("RESULT: LOGS:", result.logs);
-//       result.stream.pipe(fs.createWriteStream(pathToPDF));
-//       conversion.kill();
-//     })
-//   })
-// }
 
 function init() {
   askQuestions();
@@ -123,11 +101,6 @@ function init() {
 
 // this returns all of the answers and github information as an object
 const addGitHubInformation = (gitHubUserName, answers) => {
-  // return new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     resolve(`Completed in 1000`)
-  //   }, 1000)
-  // })
   return Promise.all([
     axios
       .get(`${gitHubBaseURL}/users/${gitHubUserName}/followers`)
@@ -151,18 +124,23 @@ const addGitHubInformation = (gitHubUserName, answers) => {
       .get(`${gitHubBaseURL}/users/${gitHubUserName}/repos`)
       .then(function(res) {
         return res.data.length;
+      }),
+
+    axios
+      .get(`https://api.github.com/users/sguitjens`)
+      .then(function(res) {
+        return res.data.avatar_url;
       })
   ])
   .then(promises => {
-    console.log(promises); // this is what is expected
-    let promisesObj = { // this returns "undefined"
+    let promisesObj = {
       followerCount: promises[0],
       followingCount: promises[1],
       starCount: promises[2],
-      repoCount: promises[3]
+      repoCount: promises[3],
+      avatarURL: promises[4]
     }
     Object.assign(answers, promisesObj);
-    console.log("FULL LIST?", answers);
     return answers;
   });
 } 

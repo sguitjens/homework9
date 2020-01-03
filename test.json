@@ -1,0 +1,115 @@
+RESULT: { numberOfPages: 1,
+  logs:
+   [ { level: 'debug',
+       message: 'Converting using electron-ipc strategy in electron 5.0.13',
+       timestamp: 2020-01-01T22:34:09.468Z },
+     { level: 'debug',
+       message:
+        'request to load the page: file:///var/folders/vt/k015qqg17c3d2t6k7mww94280000gn/T/electron-html-to-tmp-data/201b8d85-a8fe-4e25-a451-4888bcfdbea6html.html',
+       timestamp: 2020-01-01T22:34:09.539Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: file:///var/folders/vt/k015qqg17c3d2t6k7mww94280000gn/T/electron-html-to-tmp-data/201b8d85-a8fe-4e25-a451-4888bcfdbea6html.html, resourceType: mainFrame, status: 200',
+       timestamp: 2020-01-01T22:34:09.541Z },
+     { level: 'debug',
+       message:
+        'request for resource: https://use.fontawesome.com/releases/v5.8.1/css/all.css, resourceType: stylesheet',
+       timestamp: 2020-01-01T22:34:09.728Z },
+     { level: 'debug',
+       message:
+        'request for resource: https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap, resourceType: stylesheet',
+       timestamp: 2020-01-01T22:34:09.728Z },
+     { level: 'debug',
+       message:
+        'request for resource: file:///var/folders/vt/k015qqg17c3d2t6k7mww94280000gn/T/electron-html-to-tmp-data/assets/little_dragon.jpg, resourceType: image',
+       timestamp: 2020-01-01T22:34:09.728Z },
+     { level: 'warn',
+       message:
+        'request for resource failed: file:///var/folders/vt/k015qqg17c3d2t6k7mww94280000gn/T/electron-html-to-tmp-data/assets/little_dragon.jpg, resourceType: image, error: net::ERR_FILE_NOT_FOUND',
+       timestamp: 2020-01-01T22:34:09.729Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap, resourceType: stylesheet, status: 200',
+       timestamp: 2020-01-01T22:34:09.731Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: https://use.fontawesome.com/releases/v5.8.1/css/all.css, resourceType: stylesheet, status: 200',
+       timestamp: 2020-01-01T22:34:09.732Z },
+     { level: 'warn',
+       message:
+        '%cElectron Security Warning (Disabled webSecurity) font-weight: bold; This renderer process has "webSecurity" disabled. This\n  exposes users of this app to severe security risks.\n \nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\n This warning will not show up\nonce the app is packaged.',
+       timestamp: 2020-01-01T22:34:09.786Z },
+     { level: 'warn',
+       message:
+        '%cElectron Security Warning (allowRunningInsecureContent) font-weight: bold; This renderer process has "allowRunningInsecureContent"\n  enabled. This exposes users of this app to severe security risks.\n\n  \nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\n This warning will not show up\nonce the app is packaged.',
+       timestamp: 2020-01-01T22:34:09.786Z },
+     { level: 'warn',
+       message:
+        '%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n    Policy set or a policy with "unsafe-eval" enabled. This exposes users of\n    this app to unnecessary security risks.\n \nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\n This warning will not show up\nonce the app is packaged.',
+       timestamp: 2020-01-01T22:34:09.787Z },
+     { level: 'debug',
+       message:
+        'request for resource: https://fonts.gstatic.com/s/biorhyme/v4/1cXwaULHBpDMsHYW_ExBr1Sqg8is.woff2, resourceType: other',
+       timestamp: 2020-01-01T22:34:09.790Z },
+     { level: 'debug',
+       message:
+        'request for resource: https://fonts.gstatic.com/s/cabin/v14/u-4x0qWljRw-Pd8w__1ImSRu.woff2, resourceType: other',
+       timestamp: 2020-01-01T22:34:09.790Z },
+     { level: 'debug',
+       message:
+        'request for resource: https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff2, resourceType: other',
+       timestamp: 2020-01-01T22:34:09.791Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: https://fonts.gstatic.com/s/biorhyme/v4/1cXwaULHBpDMsHYW_ExBr1Sqg8is.woff2, resourceType: other, status: 200',
+       timestamp: 2020-01-01T22:34:09.791Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: https://fonts.gstatic.com/s/cabin/v14/u-4x0qWljRw-Pd8w__1ImSRu.woff2, resourceType: other, status: 200',
+       timestamp: 2020-01-01T22:34:09.791Z },
+     { level: 'debug',
+       message:
+        'request for resource completed: https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff2, resourceType: other, status: 200',
+       timestamp: 2020-01-01T22:34:09.792Z } ],
+  stream:
+   ReadStream {
+     _readableState:
+      ReadableState {
+        objectMode: false,
+        highWaterMark: 65536,
+        buffer: BufferList { length: 0 },
+        length: 0,
+        pipes: null,
+        pipesCount: 0,
+        flowing: null,
+        ended: false,
+        endEmitted: false,
+        reading: false,
+        sync: true,
+        needReadable: false,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        emitClose: false,
+        destroyed: false,
+        defaultEncoding: 'utf8',
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     _events: { end: [Function] },
+     _eventsCount: 1,
+     _maxListeners: undefined,
+     path:
+      '/var/folders/vt/k015qqg17c3d2t6k7mww94280000gn/T/electron-html-to-tmp-data/201b8d85-a8fe-4e25-a451-4888bcfdbea6.pdf',
+     fd: null,
+     flags: 'r',
+     mode: 438,
+     start: undefined,
+     end: Infinity,
+     autoClose: true,
+     pos: undefined,
+     bytesRead: 0,
+     closed: false } }
+     
