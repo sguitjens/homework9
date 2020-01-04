@@ -54,7 +54,7 @@ function generateHTML(data) {
          .wrapper {
          background-color: ${colors[data.color].wrapperBackground};
          padding-top: 100px;
-         height: 70%
+         height: 100%
          }
          body {
          background-color: white;
@@ -186,7 +186,7 @@ function generateHTML(data) {
         </div>
       </div>
 
-      <div class="container">
+      <main class="container">
       <div class="main links-nav">
         <div>
           <div class="col">
@@ -214,10 +214,7 @@ function generateHTML(data) {
           </div>
         </div>
       </div>
-    </div>
-
-        <footer class="wrapper">
-        </footer>
+    </main>
 
       </body>
       </html>`
