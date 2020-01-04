@@ -2,7 +2,6 @@ const inquirer = require("inquirer");
 const axios = require("axios");
 const convertHTMLToPDF = require("electron-html-to"); // HTML conversion tool: convert to PDF
 const fs = require("fs");
-const util = require("util");
 const generate = require("./generateHTML");
 
 const gitHubBaseURL = "https://api.github.com";
