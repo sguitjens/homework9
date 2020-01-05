@@ -1,6 +1,16 @@
 # Developer Profile Generator
 
-This is a command-line application that dynamically generates a PDF profile. The application uses the [Inquirer](https://www.npmjs.com/package/inquirer/) node module to prompt for the user's name, a color (to help define the styling of the page), the user's city and state of residence, the user's GitHub and LinkedIn usernames, and a short bio. The following information is retrieved from the user's GitHub repo:
+This is a command-line [Node.js](https://nodejs.org/en/) application that dynamically generates a PDF profile. The application uses the [Inquirer](https://www.npmjs.com/package/inquirer/) node module to prompt for the following user information:
+   * Name
+   * A color (to help define the styling of the page)
+   * City of residence
+   * State of residence
+   * GitHub username
+   * LinkedIn username
+   * A short bio
+   
+
+The following information is retrieved from GitHub about the user's account:
    * A photo of the user
    * Number of public repos
    * Number of stars
