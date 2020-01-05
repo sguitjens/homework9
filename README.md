@@ -17,7 +17,7 @@ The following information is retrieved from GitHub about the user's account:
    * Number of followers
    * Number of users being followed
 
-The application generates an HTML bio page using the information gathered from the questions and from GitHub. It then uses the [electron-html-to](https://www.npmjs.com/package/electron-html-to) node module to generate a PDF of the bio page from the HTML page. The application saves the PDF to the same directory as the HTML and javascripg files.
+The application generates an HTML bio page using the information gathered from the questions and from GitHub. It then uses the [electron-html-to](https://www.npmjs.com/package/electron-html-to) node module to generate a PDF of the bio page from the HTML page. The application saves the PDF to the same directory as the HTML and javascript files.
 
 To invoke the application, use the following command:
 
